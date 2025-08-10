@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "HabitMaster",
+  "description": "Simple habit tracker as an Edge extension popup.",
+  "version": "0.1.0",
+  "action": {
+    "default_title": "HabitMaster"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "icons": {},
+  "permissions": ["storage", "system.display"],
+  "host_permissions": []
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HabitMaster — Popup</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <style>
+      /* Constrain popup size */
+      html, body { width: 360px; min-height: 520px; }
+      .container { max-width: 100%; margin: 12px; }
+      .app-header { position: sticky; top: 0; }
+      .grid th.habit, .grid td.habit { position: static; }
+      .grid thead th { top: 0; }
+      footer.footer { display: none; }
+    </style>
+  </head>
+  <body>
+    <header class="app-header">
+      <h1>HabitMaster</h1>
+      <div class="user-info">
+        <button id="btn-reset" class="btn">Reset</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="card">
+        <h2>Add a habit</h2>
+        <form id="form-add-habit" class="row gap">
+          <input id="input-habit-name" type="text" placeholder="e.g., Morning jog" required />
+          <input id="input-habit-weight" type="number" min="0" step="1" value="1" placeholder="Weight" />
+          <button class="btn primary" type="submit">Add</button>
+        </form>
+      </section>
+
+      <section id="stats-card" class="card">
+        <h2>Stats</h2>
+        <div class="stats">
+          <div class="kpis">
+            <div class="kpi"><div class="kpi-label">Weekly Avg</div><div id="kpi-week-avg" class="kpi-value">0%</div></div>
+            <div class="kpi"><div class="kpi-label">Best Day</div><div id="kpi-best-day" class="kpi-value">0%</div></div>
+            <div class="kpi"><div class="kpi-label">Completed</div><div id="kpi-completed-count" class="kpi-value">0</div></div>
+          </div>
+          <div class="bars" id="weekly-bars"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="row space-between center">
+          <h2>Your week</h2>
+          <div class="row gap">
+            <button id="btn-prev-week" class="btn">◀ Prev</button>
+            <div id="week-label" class="week-label"></div>
+            <button id="btn-next-week" class="btn">Next ▶</button>
+          </div>
+        </div>
+
+        <div class="row space-between center" style="margin: 12px 0 8px;">
+          <div class="score-wrap" style="width:100%;">
+            <div class="score-header">
+              <span id="today-score-icon" class="score-icon" aria-hidden="true">😴</span>
+              <div id="today-score-text" class="today-total">Today's Score: 0 / 100</div>
+            </div>
+            <div class="progress"><div id="today-progress" class="progress-fill" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div id="grid" class="grid"></div>
+        <div id="habits-empty" class="empty-state hidden">No habits yet. Add your first one above.</div>
+      </section>
+
+      <section id="export-card" class="card">
+        <h2>Export</h2>
+        <div class="row gap">
+          <button id="btn-export-week" class="btn">Download This Week (CSV)</button>
+          <button id="btn-export-all" class="btn">Download All (CSV)</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
