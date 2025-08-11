@@ -1,65 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HabitMaster — Edge Extension & Web App</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitMaster - Cross-Platform Habit Tracker</title>
     <style>
-      :root { color-scheme: light dark; }
-      body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;margin:0;padding:24px;line-height:1.5;background:#0b0f14;color:#e6edf3}
-      .wrap{max-width:880px;margin:0 auto}
-      a.btn{display:inline-block;padding:10px 16px;border-radius:8px;background:#238636;color:white;text-decoration:none;font-weight:600}
-      a.btn.secondary{background:#1f6feb}
-      code{background:#161b22;padding:2px 6px;border-radius:6px}
-      h1{margin-top:0}
-      section{margin:24px 0}
-      .muted{color:#8b949e}
-      .grid{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
-      ul{margin:8px 0 0 20px}
-      ol{margin:8px 0 0 20px}
-      .card{border:1px solid #30363d;border-radius:12px;padding:16px;background:#0d1117}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 { font-size: 3rem; margin-bottom: 20px; color: #4a5568; }
+        .subtitle { font-size: 1.2rem; color: #718096; margin-bottom: 40px; }
+        .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
+        .app-card {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .app-card:hover {
+            border-color: #4299e1;
+            transform: translateY(-5px);
+        }
+        .app-icon { font-size: 3rem; margin-bottom: 15px; }
+        .app-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; }
+        .app-desc { color: #718096; margin-bottom: 20px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4299e1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        .features {
+            text-align: left;
+            margin: 40px 0;
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        .features h3 { margin-bottom: 20px; color: #4a5568; }
+        .features ul { list-style: none; }
+        .features li { padding: 8px 0; }
+        .features li:before { content: "✅ "; margin-right: 10px; }
     </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <h1>HabitMaster</h1>
-      <p class="muted">Minimal habit tracker. Use the web app (with Firebase login & sync) or the Edge extension (local-only, no login).</p>
-
-      <section class="card">
-        <div class="grid">
-          <div>
-            <h2 style="margin:0 0 8px">Edge Extension</h2>
-            <div>Runs entirely in the popup using <code>chrome.storage.local</code> — no network calls.</div>
-          </div>
-          <div><a class="btn" href="./habitmaster-edge.zip" download>Download (.zip)</a></div>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 HabitMaster</h1>
+        <p class="subtitle">Cross-Platform Habit Tracker with Real-time Firebase Sync</p>
+        
+        <div class="apps">
+            <div class="app-card">
+                <div class="app-icon">🌐</div>
+                <div class="app-title">Web App</div>
+                <div class="app-desc">Use directly in your browser with Google sign-in</div>
+                <a href="./trackerhtml/index.html" class="btn">Launch Web App</a>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">🔌</div>
+                <div class="app-title">Edge Extension</div>
+                <div class="app-desc">Install as Microsoft Edge browser extension</div>
+                <a href="./edge-extension/" class="btn">View Extension</a>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">📱</div>
+                <div class="app-title">Android App</div>
+                <div class="app-desc">Native Android application with offline sync</div>
+                <a href="./mobile-app/" class="btn">View Mobile</a>
+            </div>
         </div>
-        <h3>Install in Microsoft Edge</h3>
-        <ol>
-          <li>Open <code>edge://extensions</code></li>
-          <li>Enable “Developer mode”</li>
-          <li>Click “Load unpacked” and select the extracted <code>edge-extension</code> folder</li>
-          <li>Pin the extension and click the icon to open the popup</li>
-        </ol>
-      </section>
-
-      <section class="card">
-        <div class="grid">
-          <div>
-            <h2 style="margin:0 0 8px">Web App (with Login)</h2>
-            <div>Hosted static SPA with Firebase Auth (Google/Anonymous) and Firestore sync.</div>
-          </div>
-          <div><a class="btn secondary" href="./app/">Open Web App</a></div>
+        
+        <div class="features">
+            <h3>🚀 Features</h3>
+            <ul>
+                <li>Real-time sync across all devices via Firebase</li>
+                <li>Google Authentication for secure access</li>
+                <li>Daily habit tracking with point system</li>
+                <li>Weekly progress visualization</li>
+                <li>Offline support with automatic sync</li>
+                <li>Cross-platform compatibility</li>
+                <li>Modern, responsive design</li>
+            </ul>
         </div>
-        <p class="muted" style="margin-top:8px">If sign‑in fails, add your Pages domain (e.g., <code>YOUR-USER.github.io</code>) to Firebase Auth → Authorized domains.</p>
-      </section>
-
-      <section>
-        <h3>What’s inside</h3>
-        <ul>
-          <li>Edge extension: <code>manifest.json</code>, <code>popup.html</code>, <code>popup.js</code>, <code>background.js</code>, <code>storage.js</code>, <code>date-utils.js</code>, <code>styles.css</code></li>
-          <li>Web app: <code>index.html</code>, <code>app.js</code>, <code>date-utils.js</code>, <code>styles.css</code>, <code>firebase-config.js</code></li>
-        </ul>
-      </section>
+        
+        <p style="margin-top: 30px; color: #718096;">
+            <a href="https://github.com/Suman73/HabitMasterApp" style="color: #4299e1;">View on GitHub</a>
+        </p>
     </div>
-  </body>
+</body>
 </html>
