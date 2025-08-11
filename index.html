@@ -1,96 +1,116 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HabitMaster — Simple Habit Tracker</title>
-    <link rel="stylesheet" href="./styles.css" />
-  </head>
-  <body>
-    <header class="app-header">
-      <h1>HabitMaster</h1>
-      <div id="auth-controls" class="auth-controls">
-        <button id="btn-sign-in" class="btn primary">Sign in with Google</button>
-        <button id="btn-guest" class="btn">Continue as Guest</button>
-        <div id="user-info" class="user-info hidden">
-          <img id="user-avatar" class="avatar" alt="avatar" />
-          <span id="user-name"></span>
-          <button id="btn-sign-out" class="btn">Sign out</button>
-        </div>
-      </div>
-    </header>
-
-    <main class="container">
-      <section id="setup-warning" class="card warning hidden"></section>
-
-      <section class="card">
-        <h2>Add a habit</h2>
-        <form id="form-add-habit" class="row gap">
-          <input id="input-habit-name" type="text" placeholder="e.g., Morning jog" required />
-          <input id="input-habit-weight" type="number" min="0" step="1" value="1" placeholder="Weight" />
-          <button class="btn primary" type="submit">Add</button>
-        </form>
-      </section>
-
-      <section id="stats-card" class="card">
-        <h2>Stats</h2>
-        <div class="stats">
-          <div class="kpis">
-            <div class="kpi"><div class="kpi-label">Weekly Avg</div><div id="kpi-week-avg" class="kpi-value">0%</div></div>
-            <div class="kpi"><div class="kpi-label">Best Day</div><div id="kpi-best-day" class="kpi-value">0%</div></div>
-            <div class="kpi"><div class="kpi-label">Completed</div><div id="kpi-completed-count" class="kpi-value">0</div></div>
-          </div>
-          <div class="bars" id="weekly-bars"></div>
-        </div>
-      </section>
-
-      <section id="motivation-card" class="card">
-        <h2>Motivation</h2>
-        <div id="motivation-text" class="motivation">Let's get started!</div>
-      </section>
-
-      <section id="export-card" class="card">
-        <h2>Export</h2>
-        <div class="row gap">
-          <button id="btn-export-week" class="btn">Download This Week (CSV)</button>
-          <button id="btn-export-all" class="btn">Download All (CSV)</button>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="row space-between center">
-          <h2>Your week</h2>
-          <div class="row gap">
-            <button id="btn-prev-week" class="btn">◀ Prev</button>
-            <div id="week-label" class="week-label"></div>
-            <button id="btn-next-week" class="btn">Next ▶</button>
-          </div>
-        </div>
-
-        <div class="row space-between center" style="margin: 12px 0 8px;">
-          <div class="score-wrap" style="width:100%;">
-            <div class="score-header">
-              <span id="today-score-icon" class="score-icon" aria-hidden="true">😴</span>
-              <div id="today-score-text" class="today-total">Today's Score: 0 / 100</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitMaster - Cross-Platform Habit Tracker</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        h1 { font-size: 3rem; margin-bottom: 20px; color: #4a5568; }
+        .subtitle { font-size: 1.2rem; color: #718096; margin-bottom: 40px; }
+        .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin: 40px 0; }
+        .app-card {
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .app-card:hover {
+            border-color: #4299e1;
+            transform: translateY(-5px);
+        }
+        .app-icon { font-size: 3rem; margin-bottom: 15px; }
+        .app-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; }
+        .app-desc { color: #718096; margin-bottom: 20px; }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #4299e1;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        .features {
+            text-align: left;
+            margin: 40px 0;
+            background: #f7fafc;
+            padding: 30px;
+            border-radius: 15px;
+        }
+        .features h3 { margin-bottom: 20px; color: #4a5568; }
+        .features ul { list-style: none; }
+        .features li { padding: 8px 0; }
+        .features li:before { content: "✅ "; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 HabitMaster</h1>
+        <p class="subtitle">Cross-Platform Habit Tracker with Real-time Firebase Sync</p>
+        
+        <div class="apps">
+            <div class="app-card">
+                <div class="app-icon">🌐</div>
+                <div class="app-title">Web App</div>
+                <div class="app-desc">Use directly in your browser with Google sign-in</div>
+                <a href="./trackerhtml/test.html" class="btn">Launch Web App</a>
             </div>
-            <div class="progress"><div id="today-progress" class="progress-fill" style="width:0%"></div></div>
-          </div>
+            
+            <div class="app-card">
+                <div class="app-icon">🔌</div>
+                <div class="app-title">Edge Extension</div>
+                <div class="app-desc">Install as Microsoft Edge browser extension</div>
+                <a href="./edge-extension/" class="btn">View Extension</a>
+            </div>
+            
+            <div class="app-card">
+                <div class="app-icon">📱</div>
+                <div class="app-title">Android App</div>
+                <div class="app-desc">Native Android application with offline sync</div>
+                <a href="./mobile-app/" class="btn">View Mobile</a>
+            </div>
         </div>
-
-        <div id="grid" class="grid">
-          <!-- Header row injected by JS -->
+        
+        <div class="features">
+            <h3>🚀 Features</h3>
+            <ul>
+                <li>Real-time sync across all devices via Firebase</li>
+                <li>Google Authentication for secure access</li>
+                <li>Daily habit tracking with point system</li>
+                <li>Weekly progress visualization</li>
+                <li>Offline support with automatic sync</li>
+                <li>Cross-platform compatibility</li>
+                <li>Modern, responsive design</li>
+            </ul>
         </div>
-
-        <div id="habits-empty" class="empty-state hidden">
-          No habits yet. Add your first one above.
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <span>Data syncs in real-time via Firebase.</span>
-    </footer>
-
-    <script type="module" src="./app.js"></script>
-  </body>
+        
+        <p style="margin-top: 30px; color: #718096;">
+            <a href="https://github.com/Suman73/HabitMasterApp" style="color: #4299e1;">View on GitHub</a>
+        </p>
+    </div>
+</body>
 </html>
