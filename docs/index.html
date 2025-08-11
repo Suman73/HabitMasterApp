@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HabitMaster — Edge Extension & Web App</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;margin:0;padding:24px;line-height:1.5;background:#0b0f14;color:#e6edf3}
+      .wrap{max-width:880px;margin:0 auto}
+      a.btn{display:inline-block;padding:10px 16px;border-radius:8px;background:#238636;color:white;text-decoration:none;font-weight:600}
+      a.btn.secondary{background:#1f6feb}
+      code{background:#161b22;padding:2px 6px;border-radius:6px}
+      h1{margin-top:0}
+      section{margin:24px 0}
+      .muted{color:#8b949e}
+      .grid{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+      ul{margin:8px 0 0 20px}
+      ol{margin:8px 0 0 20px}
+      .card{border:1px solid #30363d;border-radius:12px;padding:16px;background:#0d1117}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>HabitMaster</h1>
+      <p class="muted">Minimal habit tracker. Use the web app (with Firebase login & sync) or the Edge extension (local-only, no login).</p>
+
+      <section class="card">
+        <div class="grid">
+          <div>
+            <h2 style="margin:0 0 8px">Edge Extension</h2>
+            <div>Runs entirely in the popup using <code>chrome.storage.local</code> — no network calls.</div>
+          </div>
+          <div><a class="btn" href="./habitmaster-edge.zip" download>Download (.zip)</a></div>
+        </div>
+        <h3>Install in Microsoft Edge</h3>
+        <ol>
+          <li>Open <code>edge://extensions</code></li>
+          <li>Enable “Developer mode”</li>
+          <li>Click “Load unpacked” and select the extracted <code>edge-extension</code> folder</li>
+          <li>Pin the extension and click the icon to open the popup</li>
+        </ol>
+      </section>
+
+      <section class="card">
+        <div class="grid">
+          <div>
+            <h2 style="margin:0 0 8px">Web App (with Login)</h2>
+            <div>Hosted static SPA with Firebase Auth (Google/Anonymous) and Firestore sync.</div>
+          </div>
+          <div><a class="btn secondary" href="./app/">Open Web App</a></div>
+        </div>
+        <p class="muted" style="margin-top:8px">If sign‑in fails, add your Pages domain (e.g., <code>YOUR-USER.github.io</code>) to Firebase Auth → Authorized domains.</p>
+      </section>
+
+      <section>
+        <h3>What’s inside</h3>
+        <ul>
+          <li>Edge extension: <code>manifest.json</code>, <code>popup.html</code>, <code>popup.js</code>, <code>background.js</code>, <code>storage.js</code>, <code>date-utils.js</code>, <code>styles.css</code></li>
+          <li>Web app: <code>index.html</code>, <code>app.js</code>, <code>date-utils.js</code>, <code>styles.css</code>, <code>firebase-config.js</code></li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

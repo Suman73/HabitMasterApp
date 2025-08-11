@@ -1,0 +1,56 @@
+name: Build and deploy Pages
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'edge-extension/**'
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+      - 'index.html'
+      - 'app.js'
+      - 'date-utils.js'
+      - 'styles.css'
+      - 'firebase-config.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare site
+        run: |
+          set -e
+          mkdir -p public/app
+          # Copy landing page
+          cp -r docs/* public/
+          # Zip the Edge extension into the site
+          (cd edge-extension && zip -r ../public/habitmaster-edge.zip .)
+          # Copy the web app into /app so it doesn't clash with index.html
+          cp index.html public/app/index.html
+          cp app.js public/app/app.js
+          cp date-utils.js public/app/date-utils.js
+          cp styles.css public/app/styles.css
+          cp firebase-config.js public/app/firebase-config.js
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
